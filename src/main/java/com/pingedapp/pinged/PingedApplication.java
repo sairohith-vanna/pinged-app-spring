@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.pingedapp.appmodels.User;
 import com.pingedapp.repositories.UserRepository;
@@ -23,10 +22,7 @@ public class PingedApplication implements CommandLineRunner {
 
 	@Autowired
 	UserRepository userRepository;
-	
-	@Autowired
-	BCryptPasswordEncoder bcryptEncoder;
-	
+
 	@Autowired
 	CustomPasswordEncodeStrategy customEncoder;
 
@@ -37,15 +33,17 @@ public class PingedApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		User user = new User();
-		user.setFirstname("Ramesh");
-		user.setLastname("Thota");
-		user.setPassword(customEncoder.getDelegatingPasswordEncoder().encode("password"));
-		user.setCity("Hyderabad");
-		user.setCountry("India");
-		user.setEmail("ramesh.thota@vannainfotech.com");
-		user.setUsername("ramesh123");
-		userRepository.save(user);
-		log.debug("CommandLineRunner run invoked.");
+		if (userRepository.count() == 0) {
+			User user = new User();
+			user.setFirstname("Ramesh");
+			user.setLastname("Thota");
+			user.setPassword(customEncoder.getDelegatingPasswordEncoder().encode("password"));
+			user.setCity("Hyderabad");
+			user.setCountry("India");
+			user.setEmail("ramesh.thota@vannainfotech.com");
+			user.setUsername("ramesh123");
+			userRepository.save(user);
+			log.debug("CommandLineRunner run invoked.");
+		}
 	}
 }

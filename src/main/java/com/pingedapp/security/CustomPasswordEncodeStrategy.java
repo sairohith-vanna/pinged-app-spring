@@ -18,7 +18,6 @@ public class CustomPasswordEncodeStrategy {
 		Map<String, PasswordEncoder> passwordEncoders = new HashMap<String, PasswordEncoder>();
 		passwordEncoders.put("bcrypt", new BCryptPasswordEncoder());
 		passwordEncoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
-		
 		PasswordEncoder encoder = new DelegatingPasswordEncoder("bcrypt", passwordEncoders);
 		return encoder;
 	}

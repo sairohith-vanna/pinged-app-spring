@@ -1,4 +1,4 @@
-package AppDTO;
+package com.pingedapp.appdto;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserLoginDTO implements Serializable {
+public class UserLoginRequest implements Serializable {
 
 	private static final long serialVersionUID = -5712717952116153637L;
 

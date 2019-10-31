@@ -22,7 +22,7 @@ public class ApplicationAuthentication {
 	public Authentication userAuthentication(String username, String password) {
 		String encodedPassword = passwordEncoder.encode(password);
 		System.out.println(encodedPassword);
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, encodedPassword);
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 		try {
 			Authentication authentication = authenticationManager.authenticate(authenticationToken);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -30,5 +30,10 @@ public class ApplicationAuthentication {
 		} catch(AuthenticationException | NullPointerException ex) {
 			return null;
 		}
+	}
+	
+	public boolean logout() {
+		SecurityContextHolder.getContext().setAuthentication(null);
+		return true;
 	}
 }
