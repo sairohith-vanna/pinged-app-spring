@@ -1,4 +1,4 @@
-package com.pingedapp.controllers;
+package com.pingedapp.controllers.identity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,13 +35,4 @@ public class AuthenticationController {
 			return null;
 	}
 	
-	@GetMapping(value = "/logout")
-	public String logout() {
-		if(appAuthentication.logout()) {
-			return "User Logged out.";
-		}
-		else {
-			return "Logout Error.";
-		}
-	}
 }

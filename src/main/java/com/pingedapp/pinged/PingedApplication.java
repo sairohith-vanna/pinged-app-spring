@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.pingedapp.repositories", "com.pingedapp.security", "com.pingedapp.appmodels",
-		"com.pingedapp.controllers" })
+		"com.pingedapp.controllers", "com.pingedapp.services" })
 @EnableMongoRepositories(basePackageClasses = UserRepository.class)
 @Slf4j
 public class PingedApplication implements CommandLineRunner {

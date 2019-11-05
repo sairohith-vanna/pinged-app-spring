@@ -26,6 +26,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 					.antMatchers("/login")
 					.permitAll()
 				.and()
+					.authorizeRequests()
+					.antMatchers("/logout")
+					.authenticated()
+				.and()
 					.csrf()
 					.disable();
 	}
