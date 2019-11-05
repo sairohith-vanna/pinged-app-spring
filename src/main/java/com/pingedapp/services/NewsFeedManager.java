@@ -2,6 +2,7 @@ package com.pingedapp.services;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -33,6 +34,8 @@ public class NewsFeedManager {
 	public boolean deletePost(String id) {
 		if (postRepository.existsById(id)) {
 			try {
+				Iterable<Comment> postComments = postRepository.findById(id).get().getComments();
+				commentRepository.deleteAll(postComments);
 				postRepository.deleteById(id);
 			} catch (IllegalArgumentException ex) {
 				throw new IllegalArgumentException();
