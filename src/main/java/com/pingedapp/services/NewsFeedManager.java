@@ -37,7 +37,6 @@ public class NewsFeedManager {
 				Iterable<Comment> postComments = postRepository.findById(id).get().getComments();
 				commentRepository.deleteAll(postComments);
 				postRepository.deleteById(id);
-				commentRepository.deleteAll(postComments);
 			} catch (IllegalArgumentException ex) {
 				throw new IllegalArgumentException();
 			}
