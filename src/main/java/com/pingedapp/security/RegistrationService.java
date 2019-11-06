@@ -18,14 +18,16 @@ public class RegistrationService {
 	UserRepository userRepository;
 	@Autowired
 	CustomPasswordEncodeStrategy encodeStrategy;
-	
+
 	public boolean registerUser(UserRegistrationRequest request) throws MongoWriteException {
 		User applicationUser = new User();
 		try {
-		BeanUtils.copyProperties(applicationUser, request);
-		User savedUser = userRepository.save(applicationUser);
-		if(savedUser != null) {
-			return true;
+			request.setPassword(encodeStrategy.getDelegatingPasswordEncoder().encode(request.getPassword()));
+			BeanUtils.copyProperties(applicationUser, request);
+
+			User savedUser = userRepository.save(applicationUser);
+			if (savedUser != null) {
+				return true;
 			}
 		} catch (InvocationTargetException | IllegalAccessException | IllegalArgumentException ex) {
 			ex.printStackTrace();
