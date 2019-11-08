@@ -24,11 +24,12 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 		httpSecurity
 					.authorizeRequests()
 					.antMatchers("/login")
-					.permitAll()
+				.permitAll()
+					.antMatchers("/posts/**", "/comments/**")
+				.authenticated()
 				.and()
-					.authorizeRequests()
-					.antMatchers("/logout")
-					.authenticated()
+					.logout().logoutUrl("/appLogout")
+					.logoutSuccessUrl("/logoutSuccess")
 				.and()
 					.csrf()
 					.disable();
