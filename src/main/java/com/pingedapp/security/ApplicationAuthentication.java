@@ -6,7 +6,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,13 +14,9 @@ public class ApplicationAuthentication {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-	@Autowired
 	CustomPasswordEncodeStrategy customEncoder;
 
 	public Authentication userAuthentication(String username, String password) {
-		String encodedPassword = passwordEncoder.encode(password);
-		System.out.println(encodedPassword);
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 		try {
 			Authentication authentication = authenticationManager.authenticate(authenticationToken);
@@ -33,7 +28,11 @@ public class ApplicationAuthentication {
 	}
 	
 	public boolean logout() {
-		SecurityContextHolder.getContext().setAuthentication(null);
-		return true;
+		Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
+		if(currentAuthentication != null) {
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return true;
+		}
+		return false;
 	}
 }
